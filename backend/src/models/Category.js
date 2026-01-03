@@ -1,4 +1,5 @@
 import { model, Schema } from "mongoose";
+import { DB } from "../constants/DB";
 
 const categorySchema = new Schema(
   {
@@ -14,6 +15,6 @@ const categorySchema = new Schema(
   }
 );
 
-const CategoryModel = model("category", categorySchema);
+const CategoryModel = model(DB.CATEGORY, categorySchema);
 
 module.exports = { CategoryModel };

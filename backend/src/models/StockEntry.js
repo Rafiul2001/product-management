@@ -1,4 +1,5 @@
 import { model, Schema } from "mongoose";
+import { DB } from "../constants/DB";
 
 const stockEntrySchema = new Schema(
   {
@@ -27,6 +28,6 @@ const stockEntrySchema = new Schema(
   }
 );
 
-const StockEntryModel = model("stockEntry", stockEntrySchema);
+const StockEntryModel = model(DB.STOCK_ENTRY, stockEntrySchema);
 
 module.exports = { StockEntryModel };

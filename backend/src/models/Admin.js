@@ -1,4 +1,5 @@
 import { model, Schema } from "mongoose";
+import { DB } from "../constants/DB";
 
 const ADMIN_TYPES = {
   SUPER_ADMIN: "SUPER_ADMIN",
@@ -32,6 +33,6 @@ const adminSchema = new Schema(
   }
 );
 
-const AdminModel = model("admin", adminSchema);
+const AdminModel = model(DB.ADMIN, adminSchema);
 
 module.exports = { AdminModel };

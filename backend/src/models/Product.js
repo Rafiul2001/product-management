@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const { DB } = require("../constants/DB");
 
 const PRODUCT_STATUS = {
   ACTIVATED: "ACTIVATED",
@@ -60,6 +61,6 @@ const productSchema = new Schema(
   }
 );
 
-const ProductModel = model("product", productSchema);
+const ProductModel = model(DB.PRODUCT, productSchema);
 
 module.exports = { ProductModel };
