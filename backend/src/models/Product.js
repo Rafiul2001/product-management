@@ -1,8 +1,8 @@
 const { Schema, model } = require("mongoose");
 
 const PRODUCT_STATUS = {
-  ACTIVE: "ACTIVE",
-  DEACTIVE: "DEACTIVE",
+  ACTIVATED: "ACTIVATED",
+  DEACTIVATED: "DEACTIVATED",
 };
 
 const productSchema = new Schema(
@@ -20,6 +20,7 @@ const productSchema = new Schema(
       type: Number,
       required: true,
       min: [0, "Minimum should be 0"],
+      default: 0,
       validate: {
         validator: (value) => {
           return value <= this.stockLimit;
@@ -37,13 +38,14 @@ const productSchema = new Schema(
         validator: (value) => {
           return value < this.price;
         },
+        message: "Discounted price must be less than actual price",
       },
     },
     productStatus: {
       type: String,
       enum: Object.values(PRODUCT_STATUS),
       required: true,
-      default: PRODUCT_STATUS.DEACTIVE,
+      default: PRODUCT_STATUS.DEACTIVATED,
     },
     stockLimit: {
       type: Number,

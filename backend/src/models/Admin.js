@@ -5,26 +5,32 @@ const ADMIN_TYPES = {
   SECONDARY_ADMIN: "SECONDARY_ADMIN",
 };
 
-const adminSchema = new Schema({
-  adminUserName: {
-    type: String,
-    required: true,
+const adminSchema = new Schema(
+  {
+    adminUserName: {
+      type: String,
+      required: true,
+    },
+    adminEmail: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    adminType: {
+      type: String,
+      enum: Object.values(ADMIN_TYPES),
+      required: true,
+      default: ADMIN_TYPES.SECONDARY_ADMIN,
+    },
   },
-  adminEmail: {
-    type: String,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  adminType: {
-    type: String,
-    enum: Object.values(ADMIN_TYPES),
-    required: true,
-    default: ADMIN_TYPES.SECONDARY_ADMIN,
-  },
-});
+  {
+    timestamps: true,
+    versionKey: false,
+  }
+);
 
 const AdminModel = model("admin", adminSchema);
 
