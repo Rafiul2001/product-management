@@ -1,18 +1,55 @@
 const { Schema, model } = require("mongoose");
 
+const PRODUCT_STATUS = {
+  ACTIVE: "ACTIVE",
+  DEACTIVE: "DEACTIVE",
+};
+
 const productSchema = new Schema(
   {
     productName: {
       type: String,
-      require: true,
+      required: true,
+    },
+    category: {
+      type: Schema.Types.ObjectId,
+      ref: "category",
+      required: true,
     },
     quantity: {
       type: Number,
-      require: true,
+      required: true,
+      min: [0, "Minimum should be 0"],
+      validate: {
+        validator: (value) => {
+          return value <= this.stockLimit;
+        },
+        message: "Quantity must be less than or equal to stockLimit",
+      },
     },
     price: {
       type: Number,
-      require: true,
+      required: true,
+    },
+    discountedPrice: {
+      type: Number,
+      validate: {
+        validator: (value) => {
+          return value < this.price;
+        },
+      },
+    },
+    productStatus: {
+      type: String,
+      enum: Object.values(PRODUCT_STATUS),
+      required: true,
+      default: PRODUCT_STATUS.DEACTIVE,
+    },
+    stockLimit: {
+      type: Number,
+      required: true,
+      min: [1, "Minimum stock limit should be 1"],
+      default: 1,
     },
   },
   {

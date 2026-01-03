@@ -4,6 +4,8 @@ import "./index.css";
 import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import RootLayout from "./layout/RootLayout.jsx";
+import DashboardLayout from "./layout/DashboardLayout.jsx";
+import Dashboard from "./components/Dashboard/Dashboard.jsx";
 
 const router = createBrowserRouter([
   {
@@ -13,6 +15,16 @@ const router = createBrowserRouter([
       {
         index: true,
         Component: App,
+      },
+    ],
+  },
+  {
+    path: "/admin",
+    Component: DashboardLayout,
+    children: [
+      {
+        index: true,
+        Component: Dashboard,
       },
     ],
   },
