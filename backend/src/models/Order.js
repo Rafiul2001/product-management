@@ -8,6 +8,24 @@ const ORDER_STATUS = {
   DELIVERED: "DELIVERED",
 };
 
+const PAYMENT_STATUS = {
+  PAID: "PAID",
+  DUE: "DUE",
+  REFUNDED: "REFUNDED",
+};
+
+const PAYMENT_METHOD = {
+  CASH_ON_DELIVERY: "CASH_ON_DELIVERY",
+  ONLINE_MOBILE_BANKING: "ONLINE_MOBILE_BANKING",
+  VISA_OR_MASTER_CARD: "VISA_OR_MASTER_CARD",
+};
+
+const REFUND_STATUS = {
+  PENDING: "PENDING",
+  SUCCESS: "SUCCESS",
+  FAILED: "FAILED",
+};
+
 const orderSchema = new Schema(
   {
     user: {
@@ -45,6 +63,38 @@ const orderSchema = new Schema(
     shippingAddress: {
       type: String,
       required: true,
+    },
+    paymentStatus: {
+      type: String,
+      enum: Object.values(PAYMENT_STATUS),
+      required: true,
+      default: PAYMENT_STATUS.DUE,
+    },
+    paymentMethod: {
+      type: String,
+      enum: Object.values(PAYMENT_METHOD),
+      required: true,
+    },
+    payment: {
+      type: {
+        transactionId: { type: String },
+        gateway: { type: String },
+        amountPaid: { type: Number },
+        currency: { type: String, default: "BDT" },
+        paidAt: { type: Date },
+      },
+    },
+    refund: {
+      type: {
+        refundId: { type: String },
+        refundAmount: { type: Number },
+        refundReason: { type: String },
+        refundStatus: {
+          type: String,
+          enum: Object.values(REFUND_STATUS),
+        },
+        refundedAt: { type: Date },
+      },
     },
   },
   {
