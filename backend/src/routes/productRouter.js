@@ -1,5 +1,6 @@
 const express = require("express");
 const { ProductModel } = require("../models/Product");
+const { verifyAdmin } = require("../middlewares/verifyAdmin");
 
 const productRouter = express.Router();
 
@@ -28,7 +29,7 @@ productRouter.get("/get/:id", async (req, res) => {
   }
 });
 
-productRouter.post("/create", async (req, res) => {
+productRouter.post("/create", verifyAdmin, async (req, res) => {
   try {
     const {
       productName,
@@ -58,7 +59,7 @@ productRouter.post("/create", async (req, res) => {
   }
 });
 
-productRouter.patch("/update/:id", async (req, res) => {
+productRouter.put("/update/:id", verifyAdmin, async (req, res) => {
   try {
     const { id } = req.params;
     const {
@@ -100,7 +101,7 @@ productRouter.patch("/update/:id", async (req, res) => {
   }
 });
 
-productRouter.delete("/delete/:id", async (req, res) => {
+productRouter.delete("/delete/:id", verifyAdmin, async (req, res) => {
   try {
     const { id } = req.params;
     const product = await ProductModel.deleteOne({ _id: id });
