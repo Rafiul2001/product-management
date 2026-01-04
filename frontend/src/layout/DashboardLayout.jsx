@@ -1,5 +1,5 @@
 import { Outlet } from "react-router";
-import Sidebar from "../components/Dashboard/Sidebar";
+import Sidebar from "../pages/Dashboard/Sidebar";
 import { AiOutlineDoubleLeft } from "react-icons/ai";
 
 const DashboardLayout = () => {

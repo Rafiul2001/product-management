@@ -1,11 +1,12 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import App from "./App.jsx";
+import App from "./pages/App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import RootLayout from "./layout/RootLayout.jsx";
 import DashboardLayout from "./layout/DashboardLayout.jsx";
-import Dashboard from "./components/Dashboard/Dashboard.jsx";
+import Dashboard from "./pages/Dashboard/Dashboard.jsx";
+import Login from "./pages/Dashboard/Login.jsx";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
         Component: Dashboard,
       },
     ],
+  },
+  {
+    path: "/admin/login",
+    Component: Login,
   },
 ]);
 
