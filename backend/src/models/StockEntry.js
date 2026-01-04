@@ -1,22 +1,36 @@
-import { model, Schema } from "mongoose";
-import { DB } from "../constants/DB";
+const { Schema } = require("mongoose");
+const { DB } = require("../constants/DB");
 
 const stockEntrySchema = new Schema(
   {
-    productList: [
-      {
-        product: {
-          type: Schema.Types.ObjectId,
-          ref: "product",
-          required: true,
+    productList: {
+      type: [
+        {
+          productName: {
+            type: String,
+            required: true,
+          },
+          productId: {
+            type: Schema.Types.ObjectId,
+            ref: DB.PRODUCT,
+            required: true,
+          },
+          quantity: {
+            type: Number,
+            required: true,
+            min: [1, "Quantity must be at least 1"],
+          },
+          unitPrice: {
+            type: Number,
+            required: true,
+          },
         },
-        quantity: {
-          type: Number,
-          required: true,
-          min: [1, "Quantity must be at least 1"],
-        },
-      },
-    ],
+      ],
+      required: true,
+    },
+    totalCost: {
+      type: Number,
+    },
     challanImageUrl: {
       type: String,
       required: true,
@@ -27,6 +41,13 @@ const stockEntrySchema = new Schema(
     versionKey: false,
   }
 );
+
+stockEntrySchema.pre("save", async function (doc, next) {
+  doc.totalCost = doc.productList.reduce((sum, product) => {
+    return (sum += product.quantity * product.unitPrice);
+  }, 0);
+  next();
+});
 
 const StockEntryModel = model(DB.STOCK_ENTRY, stockEntrySchema);
 

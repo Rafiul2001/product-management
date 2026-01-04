@@ -3,10 +3,18 @@ const { config } = require("../config/config");
 
 const dbConnect = async () => {
   try {
-    mongoose.connect(`${config.DB_CONNECTION_URL}${config.DATABASE}`);
+    await mongoose.connect(`${config.DB_CONNECTION_URL}${config.DATABASE}`);
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
-module.exports = { dbConnect };
+const dbDisconnect = async () => {
+  try {
+    await mongoose.disconnect();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+module.exports = { dbConnect, dbDisconnect };

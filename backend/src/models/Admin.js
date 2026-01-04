@@ -1,5 +1,5 @@
-import { model, Schema } from "mongoose";
-import { DB } from "../constants/DB";
+const { Schema, model } = require("mongoose");
+const { DB } = require("../constants/DB");
 
 const ADMIN_TYPES = {
   SUPER_ADMIN: "SUPER_ADMIN",
@@ -11,6 +11,7 @@ const adminSchema = new Schema(
     adminUserName: {
       type: String,
       required: true,
+      unique: true,
     },
     adminEmail: {
       type: String,
@@ -35,4 +36,4 @@ const adminSchema = new Schema(
 
 const AdminModel = model(DB.ADMIN, adminSchema);
 
-module.exports = { AdminModel };
+module.exports = { AdminModel, ADMIN_TYPES };

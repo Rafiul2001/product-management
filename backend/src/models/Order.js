@@ -1,5 +1,5 @@
-import { model, Schema } from "mongoose";
-import { DB } from "../constants/DB";
+const { Schema, model } = require("mongoose");
+const { DB } = require("../constants/DB");
 
 const ORDER_STATUS = {
   PENDING: "PENDING",
@@ -30,7 +30,7 @@ const orderSchema = new Schema(
   {
     user: {
       type: Schema.Types.ObjectId,
-      ref: "user",
+      ref: DB.USER,
       required: true,
     },
     productList: {
@@ -38,7 +38,7 @@ const orderSchema = new Schema(
         {
           product: {
             type: Schema.Types.ObjectId,
-            ref: "product",
+            ref: DB.PRODUCT,
             required: true,
           },
           quantity: {

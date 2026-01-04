@@ -30,11 +30,23 @@ productRouter.get("/get/:id", async (req, res) => {
 
 productRouter.post("/create", async (req, res) => {
   try {
-    const { productName, quantity, price } = req.body;
-    const newProduct = new ProductModel({
+    const {
       productName,
+      category,
       quantity,
       price,
+      discountedPrice,
+      productStatus,
+      stockLimit,
+    } = req.body;
+    const newProduct = new ProductModel({
+      productName,
+      category,
+      quantity,
+      price,
+      discountedPrice,
+      productStatus,
+      stockLimit,
     });
     await newProduct.save();
     return res.status(201).json({
@@ -49,12 +61,24 @@ productRouter.post("/create", async (req, res) => {
 productRouter.patch("/update/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { productName, quantity, price } = req.body;
+    const {
+      productName,
+      category,
+      quantity,
+      price,
+      discountedPrice,
+      productStatus,
+      stockLimit,
+    } = req.body;
     const updatedQuery = {
       $set: {
         productName: productName,
+        category: category,
         quantity: quantity,
         price: price,
+        discountedPrice: discountedPrice,
+        productStatus: productStatus,
+        stockLimit: stockLimit,
       },
     };
     const product = await ProductModel.findByIdAndUpdate(
